@@ -65,7 +65,7 @@ class Framework(object):
 
         # preparing everything 
         self.loglevel = self.conf.get('FRAMEWORK', 'loglevel')
-        self._setlogging(self)       
+        self._setlogging()       
         self.plugins = self._getplugins()
 
         # run
@@ -86,14 +86,14 @@ class Framework(object):
         formatter = logging.Formatter(FORMAT)
         formatter.converter = time.gmtime  # to convert timestamps to UTC
         logStream.setFormatter(formatter)
-        if self.loglevel == "debug":
+        if self.loglevel.lower() == "debug":
             level = logging.DEBUG
-        elif self.loglevel == "info":
+        elif self.loglevel.lower() == "info":
             level = logging.INFO
         else:
             level = logging.WARNING
-        logStream.setLevel(level)
         self.log.addHandler(logStream)
+        self.log.setLevel(level)
 
 
     def _getplugins(self):
@@ -117,8 +117,11 @@ class Framework(object):
             paths = 'appa.plugins.event.selection'
         else:
             paths = 'appa.plugins.event.scale'
-            
-        return PluginManager.getplugin(self, paths, name, self.conf)
+   
+        # FIXME
+        # we are instantiating pm many times 
+        pm = PluginManager()
+        return pm.getplugin(self, paths, name, self.conf)
 
 
     # -------------------------------------------------------------------------
