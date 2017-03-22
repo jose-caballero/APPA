@@ -19,3 +19,29 @@ As user:
     $ python setup.py install --home=$HOME
     $ export PYTHONPATH=$HOME/lib/python:$PYTHONPATH
 
+
+===============================================================================
+   TESTING 
+===============================================================================
+
+1) install it
+2) create a fake config file like this:
+
+        [FRAMEWORK]
+        loglevel = debug
+        inputs = in
+        outputs = out
+        analysis = fakeselection, fakescale
+
+        [fakeselection]
+        name = fakeselection
+        type = selection
+        param1 = value1      
+
+        [fakescale]
+        name = fakescale
+        type = scale 
+        param1 = value1      
+
+Note two fake plugins -fakeselection and fakescale- are provided
+

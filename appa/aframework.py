@@ -43,12 +43,14 @@ class Framework(object):
 
         [A_1]
         type = <selection|scale>
+        name = <name of the plugin>
         param1 = <value>
         param2 = <value>
         ...
 
         [A_n]
         type = <selection|scale>
+        name = <name of the plugin>
         param1 = <value>
         param2 = <value>
         ...
@@ -100,7 +102,8 @@ class Framework(object):
 
         plugins = []
         for step in self.analysis:
-            plugin = self._getplugin(step)
+            name = self.conf.get(step, "name")
+            plugin = self._getplugin(name)
             plugins.append(plugin)
         return plugins
 
