@@ -45,3 +45,4 @@ As user:
 
 Note two fake plugins -fakeselection and fakescale- are provided
 
+3) run script /usr/bin/appa (or $HOME/bin/appa) passing as input the location of the config file
