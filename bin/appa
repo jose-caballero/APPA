@@ -1,0 +1,19 @@
+#!/usr/bin/env python   
+
+"""
+a very simple bin script
+that reads a config file a call the Framework
+"""
+
+import sys
+from ConfigParser import SafeConfigParser
+from appa.aframework import Framework
+
+
+confname = sys.argv[1]
+conf = SafeConfigParser()
+conf.readfp( open(confname) )
+
+framework = Framework(conf)
+framework.run()
+

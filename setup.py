@@ -75,9 +75,15 @@ setup(
     maintainer_email='MEMAIL',
     url='https://github.com/jose-caballero/APPA',
     packages=['appa',
+              'appa.external',
+              'appa.plugins',
+              'appa.plugins.event',
+              'appa.plugins.event.selection',
+              'appa.plugins.event.scale',
+
               ],
     scripts = [ # Utilities and main script
-               'scripts/appa',
+               'bin/appa',
               ],
     
     data_files = choose_data_files()
