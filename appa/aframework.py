@@ -102,12 +102,11 @@ class Framework(object):
 
         plugins = []
         for step in self.analysis:
-            name = self.conf.get(step, "name")
             plugin = self._getplugin(name)
             plugins.append(plugin)
         return plugins
 
-    def _getplugin(self, name):
+    def _getplugin(self, step):
         '''
         get the right plugin for each analysis name
         First, we need to find out which type of plugin/name is:
@@ -115,16 +114,17 @@ class Framework(object):
             - scale
         then we get that plugin
         '''
-        kind = self.conf.get(name, 'type')
+        kind = self.conf.get(step, 'type')
         if kind == 'selection':
             paths = 'appa.plugins.event.selection'
         else:
             paths = 'appa.plugins.event.scale'
    
+        pluginname = self.conf.get(step, "name")
         # FIXME
         # we are instantiating pm many times 
         pm = PluginManager()
-        return pm.getplugin(self, paths, name, self.conf)
+        return pm.getplugin(self, paths, pluginname, self.conf, step)
 
 
     # -------------------------------------------------------------------------

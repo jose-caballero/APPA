@@ -39,7 +39,7 @@ class PluginManager(object):
         self.log.debug('PluginManager initialized.')
 
 
-    def getpluginlist(self, parent, paths, namelist, conf):
+    def getpluginlist(self, parent, paths, namelist, *k, **kw):
         '''
         Provides a list of initialized plugin objects. 
         parent: reference to the calling object
@@ -50,36 +50,38 @@ class PluginManager(object):
         '''
         plist = []
         for name in namelist:
-            po = self._getplugin(parent, paths, name, conf)
+            po = self._getplugin(parent, paths, name, *k, **kw)
             plist.append(po)
         self.log.info('returning a list of plugins = %s' %plist)
         return plist
 
 
-    def getplugin(self, parent, paths, name, conf):
+    def getplugin(self, parent, paths, name, *k, **kw):
         '''
         Provides a single initialized plugin object. 
         parent: reference to the calling object
         paths: list of subdirectories from where to import the plugin(s)
         name: name of the single plugin to be imported
-        conf: config parser object to feed to the plugin
+        #config: config parser object to feed to the plugin
+        #section: the section name in the config object that is relevant for this plugin
         '''
-        p = self._getplugin(parent, paths, name, conf)
+        p = self._getplugin(parent, paths, name, *k, **kw)
         self.log.info('returning a plugin = %s' %p)
         return p
 
 
-    def _getplugin(self, parent, paths, name, conf):
+    def _getplugin(self, parent, paths, name, *k, **kw):
         """
         returns an initialized plugin object.
         parent: reference to the calling object
         paths: list of subdirectories from where to import the plugin(s)
         name: name of the single plugin to be imported
-        conf: config parser object to feed to the plugin
+        #config: config parser object to feed to the plugin
+        #section: the section name in the config object that is relevant for this plugin
         """
         self.log.debug('Starting')
         ko = self._getpluginclass(paths, name)
-        po = ko(parent, name, conf)
+        po = ko(parent, *k, **kw)
         self.log.debug('Leaving, returning %s' %po)
         return po
     
