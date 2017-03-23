@@ -14,7 +14,7 @@ import logging
 import logging.handlers
 import time
 
-from appa.external.pluginmanager import PluginManager
+import appa.utils as utils
 
 
 class Framework(object):
@@ -66,66 +66,11 @@ class Framework(object):
         self.analysis = [i.strip() for i in analysis.split(',')]
 
         # preparing everything 
-        self.loglevel = self.conf.get('FRAMEWORK', 'loglevel')
-        self._setlogging()       
-        self.plugins = self._getplugins()
+        self.log = utils.setlogging(self)       
+        self.plugins = utils.getplugins(self)
 
         # run
         self.run()
-
-
-    # -------------------------------------------------------------------------
-    # preparing everything 
-    # -------------------------------------------------------------------------
-
-    def _setlogging(self):
-        
-        self.log = logging.getLogger()
-        logStream = logging.StreamHandler()
-        # FIXME
-        # we may want to change the message format
-        FORMAT='%(asctime)s (UTC) [ %(levelname)s ] %(name)s %(filename)s:%(lineno)d %(funcName)s(): %(message)s'
-        formatter = logging.Formatter(FORMAT)
-        formatter.converter = time.gmtime  # to convert timestamps to UTC
-        logStream.setFormatter(formatter)
-        if self.loglevel.lower() == "debug":
-            level = logging.DEBUG
-        elif self.loglevel.lower() == "info":
-            level = logging.INFO
-        else:
-            level = logging.WARNING
-        self.log.addHandler(logStream)
-        self.log.setLevel(level)
-
-
-    def _getplugins(self):
-
-        plugins = []
-        for step in self.analysis:
-            plugin = self._getplugin(name)
-            plugins.append(plugin)
-        return plugins
-
-    def _getplugin(self, step):
-        '''
-        get the right plugin for each analysis name
-        First, we need to find out which type of plugin/name is:
-            - selection
-            - scale
-        then we get that plugin
-        '''
-        kind = self.conf.get(step, 'type')
-        if kind == 'selection':
-            paths = 'appa.plugins.event.selection'
-        else:
-            paths = 'appa.plugins.event.scale'
-   
-        pluginname = self.conf.get(step, "name")
-        # FIXME
-        # we are instantiating pm many times 
-        pm = PluginManager()
-        return pm.getplugin(self, paths, pluginname, self.conf, step)
-
 
     # -------------------------------------------------------------------------
     # run 
