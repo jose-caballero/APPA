@@ -1,7 +1,7 @@
 an Alternative framework for Particle Physics Analysis
 
 ---
-    DEPLOYMENT
+DEPLOYMENT
 ---
 
 As root:
@@ -20,7 +20,7 @@ As user:
 
 
 ---
-   TESTING 
+TESTING 
 ---
 
 1) install it
