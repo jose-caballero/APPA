@@ -1,17 +1,17 @@
 an Alternative framework for Particle Physics Analysis
 
 ---
-DEPLOYMENT
+Deployment
 ---
 
-As root:
+**As root**:
 
     $ git clone https://github.com/jose-caballero/APPA.git
     $ cd APPA
     $ python setup.py bdist_rpm
     $ rpm -Uhv dist/appa-<version>.noarch.rpm
 
-As user:
+**As user:**
 
     $ git clone https://github.com/jose-caballero/APPA.git
     $ cd APPA
@@ -20,7 +20,7 @@ As user:
 
 
 ---
-TESTING 
+Testing 
 ---
 
 1) install it
@@ -45,3 +45,5 @@ TESTING
 Note two fake plugins -fakeselection and fakescale- are provided
 
 3) run script /usr/bin/appa (or $HOME/bin/appa) passing as input the location of the config file
+
+---
